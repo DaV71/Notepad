@@ -154,9 +154,18 @@ public class Notepad extends JFrame {
     private void saveAsFileHandler(){
         String text = textArea1.getText();
         RandomAccessFile raf = null;
-        String fileName =  JOptionPane.showInputDialog("Write file name");
-        this.setTitle(fileName);
-        String path = fileName+=".txt";
+        JFileChooser fileChooser = new JFileChooser();
+        int result =  fileChooser.showSaveDialog(null);
+        String path="";
+
+        if (result==JFileChooser.APPROVE_OPTION){
+            path =fileChooser.getSelectedFile().getAbsolutePath();
+            String fileName = fileChooser.getSelectedFile().getName();
+            this.setTitle(fileName);
+            path+=".txt";
+        }
+
+
         File file = new File(path);
         try{
             raf = new RandomAccessFile(file, "rwd");
