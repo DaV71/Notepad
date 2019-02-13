@@ -34,14 +34,19 @@ public class Notepad extends JFrame {
         this.setJMenuBar(menuBar);
         JMenu file= menuBar.add(new JMenu("File"));
         JMenuItem newFile= file.add(new JMenuItem("New"));
+        newFile.setMnemonic('N');
         file.addSeparator();
         JMenuItem openFile= file.add(new JMenuItem("Open"));
+        openFile.setMnemonic('O');
         file.addSeparator();
         JMenuItem saveFile =  file.add(new JMenuItem("Save"));
+        saveFile.setMnemonic('S');
         file.addSeparator();
         JMenuItem saveAsFile =  file.add(new JMenuItem("Save as"));
+        saveAsFile.setToolTipText("Save file on disc as txt file");
         file.addSeparator();
         JMenuItem closeFile =  file.add(new JMenuItem("Close file"));
+        closeFile.setMnemonic('C');
 
 
 
