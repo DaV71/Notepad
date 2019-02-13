@@ -16,13 +16,9 @@ public class Notepad extends JFrame {
         this.setSize(500,600);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setBounds((Toolkit.getDefaultToolkit().getScreenSize().width-this.getWidth())/2,(Toolkit.getDefaultToolkit().getScreenSize().height-this.getHeight())/2,this.getWidth(),this.getHeight());
-        this.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode()==KeyEvent.VK_S&&e.isControlDown())
-                    saveFileHandler();
-            }
-        });
+
+
+
         initComponents();
 
         this.getContentPane().add(panel1);
@@ -34,18 +30,22 @@ public class Notepad extends JFrame {
         this.setJMenuBar(menuBar);
         JMenu file= menuBar.add(new JMenu("File"));
         JMenuItem newFile= file.add(new JMenuItem("New"));
+        newFile.setAccelerator(KeyStroke.getKeyStroke("ctrl N"));
         newFile.setMnemonic('N');
         file.addSeparator();
         JMenuItem openFile= file.add(new JMenuItem("Open"));
+        openFile.setAccelerator(KeyStroke.getKeyStroke("ctrl O"));
         openFile.setMnemonic('O');
         file.addSeparator();
         JMenuItem saveFile =  file.add(new JMenuItem("Save"));
+        saveFile.setAccelerator(KeyStroke.getKeyStroke("ctrl S"));
         saveFile.setMnemonic('S');
         file.addSeparator();
         JMenuItem saveAsFile =  file.add(new JMenuItem("Save as"));
         saveAsFile.setToolTipText("Save file on disc as txt file");
         file.addSeparator();
         JMenuItem closeFile =  file.add(new JMenuItem("Close file"));
+        closeFile.setAccelerator(KeyStroke.getKeyStroke("ctrl C"));
         closeFile.setMnemonic('C');
 
 
