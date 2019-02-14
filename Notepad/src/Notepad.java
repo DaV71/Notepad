@@ -19,9 +19,12 @@ public class Notepad extends JFrame {
 
 
 
+
+        this.setLayout(new GridLayout(1,1));
+        this.getContentPane().add(scrollPane);
+
         initComponents();
 
-        this.getContentPane().add(panel1);
 
     }
 
@@ -47,6 +50,8 @@ public class Notepad extends JFrame {
         JMenuItem closeFile =  file.add(new JMenuItem("Close file"));
         closeFile.setAccelerator(KeyStroke.getKeyStroke("ctrl C"));
         closeFile.setMnemonic('C');
+
+
 
 
 
@@ -85,7 +90,7 @@ public class Notepad extends JFrame {
             }
         });
 
-        panel1.add(scrollPane);
+       // panel1.add(scrollPane);
 
 
     }
@@ -187,8 +192,10 @@ public class Notepad extends JFrame {
            System.exit(0);}
     }
 
-    private JPanel panel1;
-    private JTextArea textArea1;
+
+
+    //private JPanel panel1= new JPanel();
+    private JTextArea textArea1 = new JTextArea();
     private  JScrollPane scrollPane = new JScrollPane(textArea1);
     private JMenuBar menuBar = new JMenuBar();
 
