@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -135,6 +136,7 @@ public class Notepad extends JFrame {
         saveFileHandler();
         textArea1.setText("");
         this.setTitle("");
+        this.path="";
 
     }
 
@@ -142,18 +144,30 @@ public class Notepad extends JFrame {
         if (!textArea1.getText().equals(""))
             newFileHandler();
         JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showOpenDialog(null);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.isDirectory()||f.getName().toLowerCase().endsWith(".txt");
+            }
+
+            @Override
+            public String getDescription() {
+                return "Text document";
+            }
+        });
+        int result = fileChooser.showOpenDialog(rootPane);
         RandomAccessFile raf = null;
         if (result==JFileChooser.APPROVE_OPTION){
             try{
-                File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                File file = new File(path=fileChooser.getSelectedFile().getAbsolutePath());
                 String title = fileChooser.getName(file);
                 title=title.replace(".txt","");
                 this.setTitle(title);
                 raf = new RandomAccessFile(file, "rwd");
                 String line = "";
                 while ((line=raf.readLine())!=null){
-                    textArea1.setText(textArea1.getText()+"\n"+line);
+                    textArea1.setText(textArea1.getText()+line+"\n");
 
                 }
 
@@ -170,10 +184,10 @@ public class Notepad extends JFrame {
     private void saveFileHandler(){
         int option = JOptionPane.showConfirmDialog(rootPane,"Do you want save changes?","Saving changes",JOptionPane.YES_NO_OPTION);
         if (option == 0) {
-            if (this.getTitle().equals("")) {
+            if (path.equals("")) {
                 saveAsFileHandler();
             } else {
-                String path = getTitle()+".txt";
+               // path = getTitle()+".txt";
                 RandomAccessFile raf = null;
                 File file = new File (path);
 
@@ -196,8 +210,20 @@ public class Notepad extends JFrame {
         String text = textArea1.getText();
         RandomAccessFile raf = null;
         JFileChooser fileChooser = new JFileChooser();
-        int result =  fileChooser.showSaveDialog(null);
-        String path="";
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.isDirectory()||f.getName().toLowerCase().endsWith(".txt");
+            }
+
+            @Override
+            public String getDescription() {
+                return ".txt";
+            }
+        });
+        int result =  fileChooser.showSaveDialog(rootPane);
+        path="";
 
         if (result==JFileChooser.APPROVE_OPTION){
             path =fileChooser.getSelectedFile().getAbsolutePath();
@@ -357,6 +383,7 @@ public class Notepad extends JFrame {
     private  JInternalFrame internalFrameReplace;
     private boolean isFindSelected = false;
     private boolean isReplaceSelected = false;
+    private String path="";
 
 
     public static void main(String[] args) {
